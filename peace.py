@@ -10,9 +10,9 @@ import hexdump
 __author__ = "Andrew Peterson"
 __contact__ = "dev4ndr3w@gmail.com"
 
-IMAGE_DOS_SIGNATURE = 0x4D5A
+IMAGE_DOS_SIGNATURE = 0x5A4D # big endian: 0x4D5A
 
-ifb = lambda b : int.from_bytes(b, byteorder="big", signed=False)
+ifb = lambda b : int.from_bytes(b, byteorder="little", signed=False)
 
 def log(message):
     print("[{}] {}".format(time.strftime("%H:%M:%S"), message))
