@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """ PEace, An open-source multi-platform windows Portable Executable(PE) analyzer
-
-    pe = peload(filename="./pe.exe") # pe: pe information object
-    print(pe.)
 """
 
 import os
+import time
 import hashlib
 import hexdump
 
@@ -13,6 +11,10 @@ __author__ = "Andrew Peterson"
 __contact__ = "dev4ndr3w@gmail.com"
 
 IMAGE_DOS_SIGNATURE = 0x4D5A
+
+def log(message):
+    print("[{}] {}".format(time.strftime("%H:%M:%S"), message))
+    return 0
 
 class PE:
     __IMAGE_DOS_HEADER_offset__ = {
@@ -25,21 +27,22 @@ class PE:
         self.filename = os.path.abspath(filename) if os.path.exists(filename) else None
         if self.filename is None:
             raise ValueError("Must provide a valid filename")
-        self.parse()
-
+        if self.parse() is 1:
+            log("Error: Cannot parse the provided file")
+        log("Done: parsing PE structure")
+       
+        
     def parse(self):
         f = open(self.filename, "rb")
         # parse IMAGE_DOS_HEADER structure
         self.IMAGE_DOS_HEADER = f.read(0x40)
-
         idh_o = self.__IMAGE_DOS_HEADER_offset__
         e_lfanew = self.IMAGE_DOS_HEADER[idh_o["e_res2"]:idh_o["e_lfanew"]]
         print(int.from_bytes(e_lfanew, byteorder="little", signed=True))
-
-#        idh_o["e_magic"] = IMAGE_DOS_HEADER[0:2]
-
         print(hexdump.hexdump(self.IMAGE_DOS_HEADER))
+
     def show_info(self, structure=""):
+        # show foundational PE header informations
         idh_o = self.__IMAGE_DOS_HEADER_offset__
         if structure is "IMAGE_DOS_HEADER" or structure is "":
             prev = 0x00
@@ -57,23 +60,5 @@ class PE:
                 print(i)
                 print(idh_o[i])
 
-class dump:
-    pass
-
-
-def info(self):
-    """
-    Features:
-        1. show full path of file
-        2. show architecture
-        3. show pe is valid
-    """
-    basic_info = {
-        "file": self.filename,
-        "arch": "s",
-        "valid": "d"
-    }
-    return basic_info
-
-def parse_pe():
-    pass
+#class dump:
+#    pass
