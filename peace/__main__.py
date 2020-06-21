@@ -4,7 +4,6 @@
 
 import os
 import time
-import hashlib
 import hexdump
 
 __author__ = "Andrew Peterson"
@@ -12,11 +11,11 @@ __contact__ = "dev4ndr3w@gmail.com"
 
 IMAGE_DOS_SIGNATURE = 0x5A4D # big endian: 0x4D5A
 
-ifb = lambda b : int.from_bytes(b, byteorder="little", signed=False)
+ifb = lambda b: int.from_bytes(b, byteorder="little", signed=False)
 
 def log(message):
     print("[{}] {}".format(time.strftime("%H:%M:%S"), message))
-    return 0
+    return 0 
 
 class PE:
     __IMAGE_DOS_HEADER__ = {
@@ -35,7 +34,7 @@ class PE:
     def __init__(self, filename=""):
         self.invalid = 0
         self.filename = os.path.abspath(filename) if os.path.exists(filename) else None
-        if self.filename is None:
+        if self.filename == None:
             raise ValueError("Must provide a valid filename")
         if self.parse() == 0:
             log("Done: parsing PE structure")
@@ -66,3 +65,4 @@ class PE:
         print("===== IMAGE_DOS_HEADER =====")
         for i in idh_o:
             print("{} {}".format(i, hex(self.__IMAGE_DOS_HEADER__[i])))
+    

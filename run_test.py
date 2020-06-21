@@ -2,5 +2,6 @@
 
 import peace
 
-pe = peace.PE("./test.exe")
+pe = peace.PE("./sample/x86.exe")
+# print(pe.__IMAGE_DOS_HEADER__["e_magic"])
 pe.show_info()
