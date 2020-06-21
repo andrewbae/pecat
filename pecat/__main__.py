@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" PEace, An open-source multi-platform windows Portable Executable(PE) analyzer
+""" pecat, An open-source multi-platform windows Portable Executable(PE) analyzer
 """
 
 import os
